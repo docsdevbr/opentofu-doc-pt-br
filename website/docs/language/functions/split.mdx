@@ -1,0 +1,47 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+sidebar_label: split
+description: |-
+  The split function produces a list by dividing a given string at all
+  occurrences of a given separator.
+---
+
+# `split` Function
+
+`split` produces a list by dividing a given string at all occurrences of a
+given separator.
+
+```hcl
+split(separator, string)
+```
+
+## Examples
+
+```
+> split(",", "foo,bar,baz")
+[
+  "foo",
+  "bar",
+  "baz",
+]
+> split(",", "foo")
+[
+  "foo",
+]
+> split(",", "")
+[
+  "",
+]
+```
+
+## Related Functions
+
+* [`join`](../../language/functions/join.mdx) performs the opposite operation: producing a string
+  joining together a list of strings with a given separator.

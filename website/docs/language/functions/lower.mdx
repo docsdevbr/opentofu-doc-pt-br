@@ -1,0 +1,34 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+sidebar_label: lower
+description: >-
+  The lower function converts all cased letters in the given string to
+  lowercase.
+---
+
+# `lower` Function
+
+`lower` converts all cased letters in the given string to lowercase.
+
+## Examples
+
+```
+> lower("HELLO")
+hello
+> lower("АЛЛО!")
+алло!
+```
+
+This function uses Unicode's definition of letters and of upper- and lowercase.
+
+## Related Functions
+
+* [`upper`](../../language/functions/upper.mdx) converts letters in a string to _uppercase_.
+* [`title`](../../language/functions/title.mdx) converts the first letter of each word in a string to uppercase.

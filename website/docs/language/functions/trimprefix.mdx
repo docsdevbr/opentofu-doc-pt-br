@@ -1,0 +1,37 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+sidebar_label: trimprefix
+description: |-
+  The trimprefix function removes the specified prefix from the start of a
+  given string.
+---
+
+# `trimprefix` Function
+
+`trimprefix` removes the specified prefix from the start of the given string. If the string does not start with the prefix, the string is returned unchanged.
+
+## Examples
+
+```
+> trimprefix("helloworld", "hello")
+world
+```
+
+```
+> trimprefix("helloworld", "cat")
+helloworld
+```
+
+## Related Functions
+
+* [`trim`](../../language/functions/trim.mdx) removes characters at the start and end of a string.
+* [`trimsuffix`](../../language/functions/trimsuffix.mdx) removes a word from the end of a string.
+* [`trimspace`](../../language/functions/trimspace.mdx) removes all types of whitespace from
+  both the start and the end of a string.

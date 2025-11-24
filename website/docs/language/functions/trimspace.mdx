@@ -1,0 +1,35 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+sidebar_label: trimspace
+description: |-
+  The trimspace function removes space characters from the start and end of
+  a given string.
+---
+
+# `trimspace` Function
+
+`trimspace` removes any space characters from the start and end of the given
+string.
+
+This function follows the Unicode definition of "space", which includes
+regular spaces, tabs, newline characters, and various other space-like
+characters.
+
+## Examples
+
+```
+> trimspace("  hello\n\n")
+hello
+```
+
+## Related Functions
+
+* [`chomp`](../../language/functions/chomp.mdx) removes just line ending characters from the _end_ of
+  a string.

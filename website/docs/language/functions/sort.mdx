@@ -1,0 +1,34 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+sidebar_label: sort
+description: |-
+  The sort function takes a list of strings and returns a new list with those
+  strings sorted lexicographically.
+---
+
+# `sort` Function
+
+`sort` takes a list of strings and returns a new list with those strings
+sorted lexicographically.
+
+The sort is in terms of Unicode codepoints, with higher codepoints appearing
+after lower ones in the result.
+
+## Examples
+
+```
+> sort(["e", "d", "a", "x"])
+[
+  "a",
+  "d",
+  "e",
+  "x",
+]
+```

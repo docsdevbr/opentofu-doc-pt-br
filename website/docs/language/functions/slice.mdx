@@ -1,0 +1,39 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+sidebar_label: slice
+description: The slice function extracts some consecutive elements from within a list.
+---
+
+# `slice` Function
+
+`slice` extracts some consecutive elements from within a list.
+
+```hcl
+slice(list, startindex, endindex)
+```
+
+`startindex` is inclusive, while `endindex` is exclusive. This function returns
+an error if either index is outside the bounds of valid indices for the given
+list.
+
+## Examples
+
+```
+> slice(["a", "b", "c", "d"], 1, 3)
+[
+  "b",
+  "c",
+]
+```
+
+## Related Functions
+
+* [`substr`](../../language/functions/substr.mdx) performs a similar function for characters in a
+  string, although it uses a length instead of an end index.

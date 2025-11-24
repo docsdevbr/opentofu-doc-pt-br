@@ -1,0 +1,145 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+sidebar_position: 99
+sidebar_label: Docker
+description: |-
+  Build your own Docker image with OpenTofu.
+---
+
+# Building a Docker Image with OpenTofu
+
+:::warning Important Change
+
+Previously, OpenTofu provided official Docker images that could be used directly. Starting with OpenTofu 1.10, direct usage of the official images is no longer supported. This page now focuses on how to build your own Docker image with OpenTofu included.
+
+If you were previously using `docker run ghcr.io/opentofu/opentofu`, you will need to build your own image following the instructions below.
+
+:::
+
+## Building your own image
+
+If you need OpenTofu in a Docker container, you will need to build your own image. You can do this in two ways:
+
+1. Use a multi-stage build to copy the `tofu` binary from the minimal OpenTofu image to your image.
+2. Use the standalone installation script to install `tofu` into your container image.
+
+### Method 1: Using a multi-stage build
+
+The minimal OpenTofu images contain only the `tofu` binary at `/usr/local/bin/tofu`. You can use these images in a multi-stage build to copy the binary into your own image.
+
+Available minimal image tags:
+- `ghcr.io/opentofu/opentofu:minimal` - Latest version
+- `ghcr.io/opentofu/opentofu:1-minimal` - Latest 1.x version
+- `ghcr.io/opentofu/opentofu:1.9-minimal` - Latest 1.9.x version
+- `ghcr.io/opentofu/opentofu:1.9.1-minimal` - Specific version
+
+Example `Dockerfile` using Alpine Linux:
+
+```Dockerfile
+FROM ghcr.io/opentofu/opentofu:minimal AS tofu
+
+FROM alpine:3.20
+
+# Copy the tofu binary from the minimal image
+COPY --from=tofu /usr/local/bin/tofu /usr/local/bin/tofu
+
+# Add any other tools or dependencies you need
+RUN apk add --no-cache git curl
+
+# Your application setup
+WORKDIR /workspace
+```
+
+Example using Ubuntu:
+
+```Dockerfile
+FROM ghcr.io/opentofu/opentofu:minimal AS tofu
+
+FROM ubuntu:24.04
+
+# Copy the tofu binary
+COPY --from=tofu /usr/local/bin/tofu /usr/local/bin/tofu
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+```
+
+### Method 2: Using the installation script
+
+You can also use the OpenTofu installation script to install the binary directly in your container image.
+
+#### Step 1: Download the installation script
+
+First, download the installation script following the [standalone installation instructions](standalone.mdx) and place it next to your `Dockerfile`.
+
+#### Step 2: Install OpenTofu in your image
+
+Example `Dockerfile` using the installation script:
+
+```Dockerfile
+FROM alpine:3.20
+
+# Copy the installation script
+COPY install-opentofu.sh /tmp/install-opentofu.sh
+
+# Install dependencies needed for the script
+RUN apk add --no-cache bash curl gpg gpg-agent
+
+# Run the installation script
+RUN chmod +x /tmp/install-opentofu.sh && \
+    /tmp/install-opentofu.sh --install-method standalone --install-path /usr/local/bin && \
+    rm /tmp/install-opentofu.sh
+
+# Add your other dependencies
+RUN apk add --no-cache git
+
+WORKDIR /workspace
+```
+
+For Ubuntu-based images:
+
+```Dockerfile
+FROM ubuntu:24.04
+
+# Copy the installation script
+COPY install-opentofu.sh /tmp/install-opentofu.sh
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    gpg \
+    && rm -rf /var/lib/apt/lists/*
+
+# Run the installation script
+RUN chmod +x /tmp/install-opentofu.sh && \
+    /tmp/install-opentofu.sh --install-method standalone --install-path /usr/local/bin && \
+    rm /tmp/install-opentofu.sh
+
+# Add your other dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+```
+
+## Verifying your image
+
+After building your image, verify that OpenTofu is correctly installed:
+
+```bash
+docker build -t my-opentofu-image .
+docker run --rm my-opentofu-image tofu --version
+```

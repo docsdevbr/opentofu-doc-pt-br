@@ -1,0 +1,161 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+description: >-
+  The `tofu output` command is used to extract the value of an output
+  variable from the state file.
+---
+
+# Command: output
+
+The `tofu output` command is used to extract the value of
+an output variable from the state file.
+
+## Usage
+
+Usage: `tofu output [options] [NAME]`
+
+With no additional arguments, `output` will display all the outputs for
+the root module. If an output `NAME` is specified, only the value of that
+output is printed.
+
+:::note
+Use of variables in [backend configuration](../../language/settings/backends/configuration.mdx#variables-and-locals)
+or [encryption block](../../language/state/encryption.mdx#configuration)
+requires [assigning values to root module variables](../../language/values/variables.mdx#assigning-values-to-root-module-variables)
+when running `tofu output`.
+:::
+
+The command-line flags are all optional. The following flags are available:
+
+* `-json` - If specified, the outputs are formatted as a JSON object, with
+  a key per output. If `NAME` is specified, only the output specified will be
+  returned. This can be piped into tools such as `jq` for further processing.
+
+* `-raw` - If specified, OpenTofu will convert the specified output value to a
+  string and print that string directly to the output, without any special
+  formatting. This can be convenient when working with shell scripts, but
+  it only supports string, number, and boolean values. Use `-json` instead
+  for processing complex data types.
+
+* `-no-color` - If specified, output won't contain any color.
+
+* `-state=path` - Path to the state file. Defaults to "terraform.tfstate".
+  Ignored when [remote state](../../language/state/remote.mdx) is used.
+
+* `-var 'NAME=VALUE'` - Sets a value for a single
+  [input variable](../../language/values/variables.mdx) declared in the
+  root module of the configuration. Use this option multiple times to set
+  more than one variable. Refer to
+  [Input Variables on the Command Line](plan.mdx#input-variables-on-the-command-line) for more information.
+
+* `-var-file=FILENAME` - Sets values for potentially many
+  [input variables](../../language/values/variables.mdx) declared in the
+  root module of the configuration, using definitions from a
+  ["tfvars" file](../../language/values/variables.mdx#variable-definitions-tfvars-files).
+  Use this option multiple times to include values from more than one file.
+
+There are several other ways to set values for input variables in the root
+module, aside from the `-var` and `-var-file` options. Refer to
+[Assigning Values to Root Module Variables](../../language/values/variables.mdx#assigning-values-to-root-module-variables) for more information.
+
+:::note
+When using the `-json` or `-raw` command-line flag, any sensitive
+values in OpenTofu state will be displayed in plain text. For more information,
+see [Sensitive Data in State](../../language/state/sensitive-data.mdx).
+:::
+
+## Examples
+
+These examples assume the following OpenTofu output snippet.
+
+```hcl
+output "instance_ips" {
+  value = aws_instance.web.*.public_ip
+}
+
+output "lb_address" {
+  value = aws_alb.web.public_dns
+}
+
+output "password" {
+  sensitive = true
+  value = var.secret_password
+}
+```
+
+To list all outputs:
+
+```shellsession
+$ tofu output
+instance_ips = [
+  "54.43.114.12",
+  "52.122.13.4",
+  "52.4.116.53"
+]
+lb_address = "my-app-alb-1657023003.us-east-1.elb.amazonaws.com"
+password = <sensitive>
+```
+
+Note that outputs with the `sensitive` attribute will be redacted:
+
+```shellsession
+$ tofu output password
+password = <sensitive>
+```
+
+To query for the DNS address of the load balancer:
+
+```shellsession
+$ tofu output lb_address
+"my-app-alb-1657023003.us-east-1.elb.amazonaws.com"
+```
+
+To query for all instance IP addresses:
+
+```shellsession
+$ tofu output instance_ips
+instance_ips = [
+  "54.43.114.12",
+  "52.122.13.4",
+  "52.4.116.53"
+]
+```
+
+## Use in automation
+
+The `tofu output` command by default displays in a human-readable format,
+which can change over time to improve clarity.
+
+For scripting and automation, use `-json` to produce the stable JSON format.
+You can parse the output using a JSON command-line parser such as
+[jq](https://stedolan.github.io/jq/):
+
+```shellsession
+$ tofu output -json instance_ips | jq -r '.[0]'
+54.43.114.12
+```
+
+For the common case of directly using a string value in a shell script, you
+can use `-raw` instead, which will print the string directly with no extra
+escaping or whitespace.
+
+```shellsession
+$ tofu output -raw lb_address
+my-app-alb-1657023003.us-east-1.elb.amazonaws.com
+```
+
+The `-raw` option works only with values that OpenTofu can automatically
+convert to strings. Use `-json` instead, possibly combined with `jq`, to
+work with complex-typed values such as objects.
+
+OpenTofu strings are sequences of Unicode characters rather than raw bytes,
+so the `-raw` output will be UTF-8 encoded when it contains non-ASCII
+characters. If you need a different character encoding, use a separate command
+such as `iconv` to transcode OpenTofu's raw output.

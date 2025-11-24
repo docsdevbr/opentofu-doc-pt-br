@@ -1,0 +1,28 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+description: Commands that allow you to read and update state.
+---
+
+# Inspecting State
+
+OpenTofu includes some commands for reading and updating state without taking
+any other actions.
+
+- [The `tofu state list` command](../commands/state/list.mdx)
+  shows the resource addresses for every resource OpenTofu knows about in a
+  configuration, optionally filtered by partial resource address.
+
+- [The `tofu state show` command](../commands/state/show.mdx)
+  displays detailed state data about one resource.
+
+- [The `tofu refresh` command](../commands/refresh.mdx) updates
+  state data to match the real-world condition of the managed resources. This is
+  done automatically during plans and applies, but not when interacting with
+  state directly.

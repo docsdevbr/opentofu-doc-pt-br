@@ -1,0 +1,33 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+sidebar_label: urldecode
+description: The urldecode function applies URL decoding to a given string.
+---
+
+# `urldecode` Function
+
+`urldecode` targets encoded characters within a string.
+
+The function is capable of decoding a comprehensive range of characters,
+including those outside the ASCII range. Non-ASCII characters are first treated as UTF-8 bytes,
+followed by the application of percent decoding to each byte,
+facilitating the accurate decoding of multibyte characters.
+
+
+## Examples
+
+```
+> urldecode("Hello+World%21")
+Hello World!
+> urldecode("%E2%98%83")
+☃
+> urldecode("foo%3Abar%40localhost%3Ffoo%3Dbar%26bar%3Dbaz")
+foo:bar@localhost?foo=bar&bar=baz
+```

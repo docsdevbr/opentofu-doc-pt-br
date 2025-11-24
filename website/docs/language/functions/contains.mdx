@@ -1,0 +1,30 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+sidebar_label: contains
+description: The contains function determines whether a list or set contains a given value.
+---
+
+# `contains` Function
+
+`contains` determines whether a given list or set contains a given single value
+as one of its elements.
+
+```hcl
+contains(list, value)
+```
+
+## Examples
+
+```
+> contains(["a", "b", "c"], "a")
+true
+> contains(["a", "b", "c"], "d")
+false
+```

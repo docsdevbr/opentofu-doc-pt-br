@@ -1,0 +1,34 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+sidebar_label: strrev
+description: The strrev function reverses a string.
+---
+
+# `strrev` Function
+
+`strrev` reverses the characters in a string.
+Note that the characters are treated as _Unicode characters_ (in technical terms, Unicode [grapheme cluster boundaries](https://unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries) are respected).
+
+```hcl
+strrev(string)
+```
+
+## Examples
+
+```
+> strrev("hello")
+olleh
+> strrev("a ☃")
+☃ a
+```
+
+## Related Functions
+
+* [`reverse`](../../language/functions/reverse.mdx) reverses a sequence.

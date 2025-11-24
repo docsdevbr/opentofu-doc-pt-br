@@ -1,0 +1,28 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+sidebar_label: filemd5
+description: |-
+  The filemd5 function computes the MD5 hash of the contents of
+  a given file and encodes it as hex.
+---
+
+# `filemd5` Function
+
+`filemd5` is a variant of [`md5`](../../language/functions/md5.mdx)
+that hashes the contents of a given file rather than a literal string.
+
+This is similar to `md5(file(filename))`, but
+because [`file`](../../language/functions/file.mdx) accepts only UTF-8 text it cannot be used to
+create hashes for binary files.
+
+Collision attacks have been successfully performed against this hashing
+function. Before using this function for anything security-sensitive, refer to
+[RFC 6151](https://tools.ietf.org/html/rfc6151) for updated security
+considerations applying to the MD5 algorithm.

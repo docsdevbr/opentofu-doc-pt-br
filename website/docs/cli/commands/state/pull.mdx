@@ -1,0 +1,65 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+description: >-
+  The `tofu state pull` command is used to manually download and output the
+  state from remote state.
+---
+
+# Command: state pull
+
+The `tofu state pull` command is used to manually download and output
+the state from [remote state](../../../language/state/remote.mdx). This command also
+works with local state.
+
+## Usage
+
+Usage: `tofu state pull`
+
+This command downloads the state from its current location, upgrades the
+local copy to the latest state file version that is compatible with
+locally-installed OpenTofu, and outputs the raw format to stdout.
+
+This is useful for reading values out of state (potentially pairing this
+command with something like [jq](https://stedolan.github.io/jq/)). It is
+also useful if you need to make manual modifications to state.
+
+You cannot use this command to inspect the OpenTofu version of
+the remote state, as it will always be converted to the current OpenTofu
+version before output.
+
+:::note
+OpenTofu state files must be in UTF-8 format without a byte order mark (BOM). For PowerShell on Windows, use `Set-Content` to automatically encode files in UTF-8 format. For example, run `tofu state pull | sc terraform.tfstate`.
+:::
+
+:::note
+Use of variables in [module sources](../../../language/modules/sources.mdx#support-for-variable-and-local-evaluation),
+[backend configuration](../../../language/settings/backends/configuration.mdx#variables-and-locals),
+or [encryption block](../../../language/state/encryption.mdx#configuration)
+requires [assigning values to root module variables](../../../language/values/variables.mdx#assigning-values-to-root-module-variables)
+when running `tofu state pull`.
+:::
+
+The command support the following command-line arguments:
+
+* `-var 'NAME=VALUE'` - Sets a value for a single
+  [input variable](../../../language/values/variables.mdx) declared in the
+  root module of the configuration. Use this option multiple times to set
+  more than one variable. Refer to
+  [Input Variables on the Command Line](../plan.mdx#input-variables-on-the-command-line) for more information.
+
+* `-var-file=FILENAME` - Sets values for potentially many
+  [input variables](../../../language/values/variables.mdx) declared in the
+  root module of the configuration, using definitions from a
+  ["tfvars" file](../../../language/values/variables.mdx#variable-definitions-tfvars-files).
+  Use this option multiple times to include values from more than one file.
+
+There are several other ways to set values for input variables in the root
+module, aside from the `-var` and `-var-file` options. Refer to
+[Assigning Values to Root Module Variables](../../../language/values/variables.mdx#assigning-values-to-root-module-variables) for more information.

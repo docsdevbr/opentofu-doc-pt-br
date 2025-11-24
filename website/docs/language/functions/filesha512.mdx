@@ -1,0 +1,23 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+sidebar_label: filesha512
+description: |-
+  The filesha512 function computes the SHA512 hash of the contents of
+  a given file and encodes it as hex.
+---
+
+# `filesha512` Function
+
+`filesha512` is a variant of [`sha512`](../../language/functions/sha512.mdx)
+that hashes the contents of a given file rather than a literal string.
+
+This is similar to `sha512(file(filename))`, but
+because [`file`](../../language/functions/file.mdx) accepts only UTF-8 text it cannot be used to
+create hashes for binary files.

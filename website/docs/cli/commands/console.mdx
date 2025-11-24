@@ -1,0 +1,141 @@
+---
+# Copyright (c) The OpenTofu Authors.
+# Copyright (c) 2014 HashiCorp, Inc.
+# OpenTofu is a registered trademark of the LF Projects, LLC.
+
+# Documentation licensed under the Mozilla Public License 2.0.
+# The original work was translated from English into Brazilian Portuguese.
+# https://github.com/opentofu/opentofu/blob/-/LICENSE
+
+description: >-
+  The tofu console command provides an interactive console for evaluating
+  expressions.
+---
+
+# Command: console
+
+The `tofu console` command provides an interactive console for
+evaluating [expressions](../../language/expressions/index.mdx).
+
+:::warning
+The `tofu console` command is not designed for use in scripts. You can use it, but
+you may find that some functions don't work as intended.
+:::
+
+## Usage
+
+Usage: `tofu console [options]`
+
+This command provides an interactive command-line console for evaluating and
+experimenting with [expressions](../../language/expressions/index.mdx).
+You can use it to test interpolations before using them in configurations
+and to interact with any values currently saved in
+[state](../../language/state/index.mdx). If the current state is empty or has not yet been created, you can use the console to experiment with the expression syntax and
+[built-in functions](../../language/functions/index.mdx). The console holds a [lock on the state](../../language/state/locking.mdx), and you will not be able to use the console while performing other actions that modify state.
+
+To close the console, enter the `exit` command or press Control-C
+or Control-D.
+
+For configurations using
+[the `local` backend](../../language/settings/backends/local.mdx) only,
+`tofu console` accepts the legacy command line option
+[`-state`](../../language/settings/backends/local.mdx#command-line-arguments).
+
+:::note
+Use of variables in [module sources](../../language/modules/sources.mdx#support-for-variable-and-local-evaluation),
+[backend configuration](../../language/settings/backends/configuration.mdx#variables-and-locals),
+or [encryption block](../../language/state/encryption.mdx#configuration)
+requires [assigning values to root module variables](../../language/values/variables.mdx#assigning-values-to-root-module-variables)
+when running `tofu console`.
+:::
+
+This command also accepts the following options for tofu console:
+
+- `-var 'NAME=VALUE'` - Sets a value for a single
+  [input variable](/docs/language/values/variables) declared in the
+  root module of the configuration. Use this option multiple times to set
+  more than one variable. Refer to
+  [Input Variables on the Command Line](#input-variables-on-the-command-line) for more information.
+
+- `-var-file=FILENAME` - Sets values for potentially many
+  [input variables](/docs/language/values/variables) declared in the
+  root module of the configuration, using definitions from a
+  ["tfvars" file](/docs/language/values/variables#variable-definitions-tfvars-files).
+  Use this option multiple times to include values from more than one file.
+
+There are several other ways to set values for input variables in the root
+module, aside from the `-var` and `-var-file` options. Refer to
+[Assigning Values to Root Module Variables](../../language/values/variables.mdx#assigning-values-to-root-module-variables) for more information.
+
+## Remote State
+
+If [remote state](../../language/state/remote.mdx) is used by the current backend,
+OpenTofu will read the state for the current workspace from the backend
+before evaluating any expressions.
+
+## Examples
+
+The `tofu console` command will read the OpenTofu configuration in the
+current working directory and the OpenTofu state file from the configured
+backend so that interpolations can be tested against both the values in the
+configuration and the state file.
+
+With the following `main.tf`:
+
+```hcl
+variable "apps" {
+  type = map(any)
+  default = {
+    "foo" = {
+      "region" = "us-east-1",
+    },
+    "bar" = {
+      "region" = "eu-west-1",
+    },
+    "baz" = {
+      "region" = "ap-south-1",
+    },
+  }
+}
+
+resource "random_pet" "example" {
+  for_each = var.apps
+}
+```
+
+Executing `tofu console` will drop you into an interactive shell where you
+can test interpolations to:
+
+Print a value from a map:
+
+```
+> var.apps.foo
+{
+  "region" = "us-east-1"
+}
+```
+
+Filter a map based on a specific value:
+
+```
+> { for key, value in var.apps : key => value if value.region == "us-east-1" }
+{
+  "foo" = {
+    "region" = "us-east-1"
+  }
+}
+```
+
+Check if certain values may not be known until apply:
+
+```
+> random_pet.example
+(known after apply)
+```
+
+Test various functions:
+
+```
+> cidrnetmask("172.16.0.0/12")
+"255.240.0.0"
+```
