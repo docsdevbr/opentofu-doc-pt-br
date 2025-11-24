@@ -1,4 +1,4 @@
-# [opentofu-doc-pt-br][page]
+# [opentofu-website-pt-br][page]
 
 [![Arquivo README em inglês][badge-readme-en]][readme-en]
 [![Arquivo README em português brasileiro][badge-readme-pt-br]][readme-pt-br]
@@ -34,11 +34,11 @@ OpenTofu&reg; é uma marca registrada da LF Projects, LLC.
 Documentação licenciada sob a [Licença Pública Mozilla 2.0][license].<br/>
 A obra original foi traduzida do inglês para o português brasileiro.
 
-[badge-contributors]: https://img.shields.io/github/contributors/docsdevbr/opentofu-doc-pt-br
+[badge-contributors]: https://img.shields.io/github/contributors/docsdevbr/opentofu-website-pt-br
 
 [badge-github-sponsors]: https://img.shields.io/github/sponsors/docsdevbr
 
-[badge-license]: https://img.shields.io/github/license/docsdevbr/opentofu-doc-pt-br
+[badge-license]: https://img.shields.io/github/license/docsdevbr/opentofu-website-pt-br
 
 [badge-readme-en]: https://img.shields.io/badge/lang-en-blue
 
@@ -48,7 +48,7 @@ A obra original foi traduzida do inglês para o português brasileiro.
 
 [contributing]: https://github.com/docsdevbr/.github/blob/main/CONTRIBUTING.md
 
-[contributors]: https://github.com/docsdevbr/opentofu-doc-pt-br/graphs/contributors
+[contributors]: https://github.com/docsdevbr/opentofu-website-pt-br/graphs/contributors
 
 [github-sponsors]: https://github.com/sponsors/docsdevbr
 

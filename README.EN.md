@@ -1,4 +1,4 @@
-# [opentofu-doc-pt-br][page]
+# [opentofu-website-pt-br][page]
 
 [![README file in English][badge-readme-en]][readme-en]
 [![README file in Brazilian Portuguese][badge-readme-pt-br]][readme-pt-br]
@@ -6,7 +6,7 @@
 [![Contributors][badge-contributors]][contributors]
 [![GitHub Sponsors][badge-github-sponsors]][github-sponsors]
 
-Translation of the OpenTofu Documentation into Brazilian Portuguese.
+Translation of the OpenTofu website into Brazilian Portuguese.
 
 ## Contributing
 
@@ -34,11 +34,11 @@ OpenTofu&reg; is a registered trademark of the LF Projects, LLC.
 Documentation licensed under the [Mozilla Public License 2.0][license].<br/>
 The original work was translated from English into Brazilian Portuguese.
 
-[badge-contributors]: https://img.shields.io/github/contributors/docsdevbr/opentofu-doc-pt-br
+[badge-contributors]: https://img.shields.io/github/contributors/docsdevbr/opentofu-website-pt-br
 
 [badge-github-sponsors]: https://img.shields.io/github/sponsors/docsdevbr
 
-[badge-license]: https://img.shields.io/github/license/docsdevbr/opentofu-doc-pt-br
+[badge-license]: https://img.shields.io/github/license/docsdevbr/opentofu-website-pt-br
 
 [badge-readme-en]: https://img.shields.io/badge/lang-en-blue
 
@@ -48,7 +48,7 @@ The original work was translated from English into Brazilian Portuguese.
 
 [contributing]: https://github.com/docsdevbr/.github/blob/main/CONTRIBUTING.EN.md
 
-[contributors]: https://github.com/docsdevbr/opentofu-doc-pt-br/graphs/contributors
+[contributors]: https://github.com/docsdevbr/opentofu-website-pt-br/graphs/contributors
 
 [github-sponsors]: https://github.com/sponsors/docsdevbr
 
