@@ -2,53 +2,60 @@
 # Copyright (c) The OpenTofu Authors.
 # Copyright (c) 2014 HashiCorp, Inc.
 # OpenTofu is a registered trademark of the LF Projects, LLC.
-
+#
 # Documentation licensed under the Mozilla Public License 2.0.
 # The original work was translated from English into Brazilian Portuguese.
 # https://github.com/opentofu/opentofu/blob/-/LICENSE
 
+source_url: https://github.com/opentofu/opentofu/blob/v1.10/website/docs/index.mdx
+revision: 09403c73281d298b63b9731b48a72513c51a542b
+status: ready
+
 sidebar_position: 1
-sidebar_label: Overview
-title: Documentation
+sidebar_label: Visão geral
+title: Documentação do OpenTofu
 hide_table_of_contents: true
 ---
 
 import DocCardList from "@theme/DocCardList";
 import DocVersionBadge from "@theme/DocVersionBadge";
 
-### OpenTofu Documentation <DocVersionBadge />
+### Documentação do OpenTofu <DocVersionBadge />
 
-Welcome to OpenTofu 1.10! This version brings a lot of new features and improvements to OpenTofu. If you are coming from a previous OpenTofu or Terraform version you can [read the details about the new features here &raquo;](intro/whats-new.mdx)
+Bem-vinda ao OpenTofu 1.10!
+Esta versão traz muitas novidades e melhorias para o OpenTofu.
+Se você está usando uma versão anterior do OpenTofu ou do Terraform, pode
+[ler os detalhes sobre as novas funcionalidades aqui &raquo;](intro/whats-new.mdx)
 
 <DocCardList
-    items={[
-        {
-            type: "link",
-            href: "intro/",
-            label: "Getting started",
-            description:
-                "Get started with OpenTofu or migrate from a previous version. This section has all the info you need.",
-        },
-        {
-            type: "link",
-            href: "language/",
-            label: "Language",
-            description:
-                "Use the OpenTofu configuration language to describe the infrastructure that OpenTofu manages.",
-        },
-        {
-            type: "link",
-            href: "cli/",
-            label: "CLI Documentation",
-            description:
-                "Learn OpenTofu's CLI-based workflows. You can use the CLI alone or with cloud backends.",
-        },
-        {
-            type: "link",
-            href: "internals/",
-            label: "Internals",
-            description:
-                "Learn how OpenTofu generates the resource dependency graph and executes other internal processes.",
-        },
-    ]}
+  items={[
+    {
+      type: "link",
+      href: "intro/",
+      label: "Começando",
+      description:
+        "Comece a usar o OpenTofu ou migre de uma versão anterior. Esta seção contém todas as informações necessárias.",
+    },
+    {
+      type: "link",
+      href: "language/",
+      label: "Linguagem",
+      description:
+        "Use a linguagem de configuração do OpenTofu para descrever a infraestrutura que o OpenTofu gerencia.",
+    },
+    {
+      type: "link",
+      href: "cli/",
+      label: "Documentação da CLI",
+      description:
+        "Aprenda os fluxos de trabalho baseados na CLI do OpenTofu. Você pode usar a CLI sozinha ou com backends na nuvem.",
+    },
+    {
+      type: "link",
+      href: "internals/",
+      label: "Processos internos",
+      description:
+        "Aprenda como o OpenTofu gera o gráfico de dependência de recursos e executa outros processos internos.",
+    },
+  ]}
 />
