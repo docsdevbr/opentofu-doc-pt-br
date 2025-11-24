@@ -54,7 +54,7 @@ The original work was translated from English into Brazilian Portuguese.
 
 [license]: LICENSE
 
-[page]: https://en.docs.dev.br/tech/o/opentofu/
+[page]: https://pt.docs.dev.br/tech/o/opentofu/
 
 [readme-en]: README.EN.md
 
