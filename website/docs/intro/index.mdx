@@ -7,58 +7,123 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://github.com/opentofu/opentofu/blob/-/LICENSE
 
-title: Getting started
+source_url: https://github.com/opentofu/opentofu/blob/v1.10/website/docs/intro/index.mdx
+revision: c3ddd51d8ca7ac3bc8780356964cac60dab3479f
+status: ready
+
+title: Começando
 sidebar_position: 2
-description: |-
-  OpenTofu is an infrastructure as code tool that lets you build, change, and version cloud and on-prem resources safely and efficiently.
+description: >-
+  O OpenTofu é uma ferramenta de infraestrutura como código que permite criar,
+  alterar e versionar recursos na nuvem e infraestruturas locais com segurança e
+  eficiência.
 ---
 
-# What is OpenTofu?
+# O que é o OpenTofu?
 
-OpenTofu is an infrastructure as code tool that lets you define both cloud and on-prem resources in human-readable configuration files that you can version, reuse, and share. You can then use a consistent workflow to provision and manage all of your infrastructure throughout its lifecycle. OpenTofu can manage low-level components like compute, storage, and networking resources, as well as high-level components like DNS entries and SaaS features.
+O OpenTofu é uma ferramenta de infraestrutura como código que permite definir
+recursos na nuvem e em infraestruturas locais em arquivos de configuração
+legíveis por pessoas, que podem ser versionados, reutilizados e compartilhados.
+Você pode então usar um fluxo de trabalho consistente para provisionar e
+gerenciar toda a sua infraestrutura ao longo de seu ciclo de vida.
+O OpenTofu pode gerenciar componentes de baixo nível, como recursos de
+computação, armazenamento e rede, bem como componentes de alto nível, como
+entradas de DNS e recursos de SaaS.
 
-## How does OpenTofu work?
+## Como o OpenTofu funciona?
 
-OpenTofu creates and manages resources on cloud platforms and other services through their application programming interfaces (APIs). Providers enable OpenTofu to work with virtually any platform or service with an accessible API.
+O OpenTofu cria e gerencia recursos em plataformas de nuvem e outros serviços
+por meio de suas APIs.
+Os provedores permitem que o OpenTofu funcione com praticamente qualquer
+plataforma ou serviço com uma API acessível.
 
-The OpenTofu community have already written **thousands of providers** to manage many different types of resources and services. You can find all publicly available providers on the [Public OpenTofu Registry](https://github.com/opentofu/registry/tree/main/providers), including Amazon Web Services (AWS), Azure, Google Cloud Platform (GCP), Kubernetes, Helm, GitHub, Splunk, DataDog, and many more.
+A comunidade OpenTofu já escreveu **milhares de provedores** para gerenciar
+diversos tipos de recursos e serviços.
+Você pode encontrar todos os provedores disponíveis publicamente no
+[Registro Público do OpenTofu](https://github.com/opentofu/registry/tree/main/providers),
+incluindo Amazon Web Services (AWS), Azure, Google Cloud Platform (GCP),
+Kubernetes, Helm, GitHub, Splunk, DataDog e muitos outros.
 
-The core OpenTofu workflow consists of three stages:
+O fluxo de trabalho principal do OpenTofu consiste em três etapas:
 
-- **Write:** You define resources, which may be across multiple cloud providers and services. For example, you might create a configuration to deploy an application on virtual machines in a Virtual Private Cloud (VPC) network with security groups and a load balancer.
-- **Plan:** OpenTofu creates an execution plan describing the infrastructure it will create, update, or destroy based on the existing infrastructure and your configuration.
-- **Apply:** On approval, OpenTofu performs the proposed operations in the correct order, respecting any resource dependencies. For example, if you update the properties of a VPC and change the number of virtual machines in that VPC, OpenTofu will recreate the VPC before scaling the virtual machines.
+- **Escrever:** Você define os recursos, que podem estar distribuídos entre
+  vários provedores e serviços de nuvem.
+  Por exemplo, você pode criar uma configuração para implantar uma aplicação em
+  máquinas virtuais em uma rede de Nuvem Privada Virtual (VPC) com grupos de
+  segurança e um balanceador de carga.
+- **Planejar:** O OpenTofu cria um plano de execução descrevendo a
+  infraestrutura que será criada, atualizada ou destruída com base na
+  infraestrutura existente e na sua configuração.
+- **Aplicar:** Após a aprovação, o OpenTofu executa as operações propostas na
+  ordem correta, respeitando quaisquer dependências de recursos.
+  Por exemplo, se você atualizar as propriedades de uma VPC e alterar o número
+  de máquinas virtuais nessa VPC, o OpenTofu recriará a VPC antes de escalar as
+  máquinas virtuais.
 
-## Why OpenTofu?
+## Por que usar o OpenTofu?
 
-### Manage any infrastructure
+### Gerencie qualquer infraestrutura
 
-Find providers for many of the platforms and services you already use in the [Public OpenTofu Registry](https://registry.opentofu.org/). You can also use the [Terraform Plugin SDK](https://developer.hashicorp.com/terraform/plugin) to write your own. OpenTofu takes an [immutable approach to infrastructure](https://www.hashicorp.com/resources/what-is-mutable-vs-immutable-infrastructure), reducing the complexity of upgrading or modifying your services and infrastructure.
+Encontre provedores para muitas das plataformas e serviços que você já usa no
+[Registro Público do OpenTofu](https://registry.opentofu.org/).
+Você também pode usar o
+[SDK de Plugin do Terraform](https://developer.hashicorp.com/terraform/plugin)
+para criar os seus próprios.
+O OpenTofu adota uma
+[abordagem imutável para infraestrutura](https://www.hashicorp.com/resources/what-is-mutable-vs-immutable-infrastructure),
+reduzindo a complexidade de atualizar ou modificar seus serviços e
+infraestrutura.
 
-### Track your infrastructure
+### Monitore sua infraestrutura
 
-OpenTofu generates a plan and prompts you for your approval before modifying your infrastructure. It also keeps track of your real infrastructure in a [state file](../language/state/index.mdx), which acts as a source of truth for your environment. OpenTofu uses the state file to determine the changes to make to your infrastructure so that it will match your configuration.
+O OpenTofu gera um plano e solicita sua aprovação antes de modificar sua
+infraestrutura.
+Ele também mantém um registro da sua infraestrutura real em um
+[arquivo de estado](../language/state/index.mdx), que funciona como uma fonte de
+verdade para o seu ambiente.
+O OpenTofu utiliza o arquivo de estado para determinar as alterações necessárias
+na sua infraestrutura, de forma que ela corresponda à sua configuração.
 
-### Automate changes
+### Automatize alterações
 
-OpenTofu configuration files are declarative, meaning that they describe the end state of your infrastructure. You do not need to write step-by-step instructions to create resources because OpenTofu handles the underlying logic. OpenTofu builds a resource graph to determine resource dependencies and creates or modifies non-dependent resources in parallel. This allows OpenTofu to provision resources efficiently.
+Os arquivos de configuração do OpenTofu são declarativos, ou seja, descrevem o
+estado final da sua infraestrutura.
+Você não precisa escrever instruções passo a passo para criar recursos, pois o
+OpenTofu cuida da lógica subjacente.
+O OpenTofu constrói um grafo de recursos para determinar as dependências entre
+eles e cria ou modifica recursos independentes em paralelo.
+Isso permite que o OpenTofu provisione recursos de forma eficiente.
 
-### Standardize configurations
+### Padronize configurações
 
-OpenTofu supports reusable configuration components called [modules](../language/modules/index.mdx) that define configurable collections of infrastructure, saving time and encouraging best practices. You can use publicly available modules from the OpenTofu Registry, or write your own.
+O OpenTofu oferece suporte a componentes de configuração reutilizáveis, chamados
+de [módulos](../language/modules/index.mdx), que definem conjuntos configuráveis
+de infraestrutura, economizando tempo e incentivando as melhores práticas.
+Você pode usar módulos disponíveis publicamente no Registro do OpenTofu ou criar
+os seus próprios.
 
-### Collaborate
+### Colabore
 
-Since your configuration is written in a file, you can commit it to a Version Control System (VCS) and use a cloud backend to efficiently manage OpenTofu workflows across teams. A cloud backend runs OpenTofu in a consistent, reliable environment and provides secure access to shared state and secret data, role-based access controls, a private registry for sharing both modules and providers, and more.
+Como sua configuração é escrita em um arquivo, você pode enviá-la para um
+Sistema de Controle de Versões (VCS) e usar um backend na nuvem para gerenciar
+com eficiência os fluxos de trabalho do OpenTofu entre times.
+Um backend na nuvem executa o OpenTofu em um ambiente consistente e confiável,
+fornecendo acesso seguro a dados compartilhados de estado e segredos, controles
+de acesso baseados em funções, um registro privado para compartilhamento de
+módulos e provedores, e muito mais.
 
-:::note Tip
-Learn more about [OpenTofu use cases](use-cases.mdx) and [how OpenTofu compares to alternatives](vs/index.mdx).
+:::note Dica
+Saiba mais sobre [casos de uso do OpenTofu](use-cases.mdx) e
+[como o OpenTofu se compara a alternativas](vs/index.mdx).
 :::
 
-## Community
+## Comunidade
 
-We welcome questions, suggestions, and contributions from the community.
+Agradecemos perguntas, sugestões e contribuições da comunidade.
 
-- Ask questions in [OpenTofu Discuss](https://github.com/orgs/opentofu/discussions).
-- Read our [contributing guide](https://github.com/opentofu/opentofu/blob/main/CONTRIBUTING.md).
-- [Submit an issue](https://github.com/opentofu/opentofu/issues) for bugs and feature requests.
+- Faça perguntas no
+  [Discuss do OpenTofu](https://github.com/orgs/opentofu/discussions).
+- Leia nosso
+  [guia de contribuição](https://github.com/opentofu/opentofu/blob/main/CONTRIBUTING.md).
+- [Abra uma issue](https://github.com/opentofu/opentofu/issues) para relatar
+  falhas e solicitar novos recursos.
