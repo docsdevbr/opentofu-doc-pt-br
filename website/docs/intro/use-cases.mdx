@@ -7,54 +7,131 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://github.com/opentofu/opentofu/blob/-/LICENSE
 
-sidebar_label: Why OpenTofu?
+source_url: https://github.com/opentofu/opentofu/blob/v1.10/website/docs/intro/use-cases.mdx
+revision: a15a6c96578a67ab06760aef663b9a1618ce4a25
+status: ready
+
+sidebar_label: Por que usar o OpenTofu?
 sidebar_position: 1
-description: |-
-  Learn how OpenTofu enables multi-cloud deployments, application management, policy compliance, and self-service infrastructure.
+description: >-
+  Saiba como o OpenTofu possibilita implantações multinuvem, gerenciamento de
+  aplicações, conformidade com políticas e infraestrutura self-service.
 ---
 
-# Use Cases
+# Casos de uso
 
-[OpenTofu](index.mdx) is an infrastructure as code tool that lets you define infrastructure resources in human-readable configuration files that you can version, reuse, and share. You can then use a consistent workflow to safely and efficiently provision and manage your infrastructure throughout its lifecycle.
+O [OpenTofu](index.mdx) é uma ferramenta de infraestrutura como código que
+permite definir recursos de infraestrutura em arquivos de configuração legíveis
+por pessoas, que podem ser versionados, reutilizados e compartilhados.
+Você pode então usar um fluxo de trabalho consistente para provisionar e
+gerenciar sua infraestrutura com segurança e eficiência ao longo de todo o seu
+ciclo de vida.
 
-This page describes popular OpenTofu use cases and provides related resources that you can use to create OpenTofu configurations and workflows.
+Esta página descreve casos de uso populares do OpenTofu e fornece recursos
+relacionados que você pode usar para criar configurações e fluxos de trabalho do
+OpenTofu.
 
-## Multi-Cloud Deployment
+## Implantação multinuvem
 
-Provisioning infrastructure across multiple clouds increases fault-tolerance, allowing for more graceful recovery from cloud provider outages. However, multi-cloud deployments add complexity because each provider has its own interfaces, tools, and workflows. OpenTofu lets you use the same workflow to manage multiple providers and handle cross-cloud dependencies. This simplifies management and orchestration for large-scale, multi-cloud infrastructures.
+O provisionamento de infraestrutura multinuvem aumenta a tolerância a falhas,
+permitindo uma recuperação mais eficiente em caso de interrupções do provedor de
+nuvem.
+No entanto, as implantações multinuvem adicionam complexidade, pois cada
+provedor possui suas próprias interfaces, ferramentas e fluxos de trabalho.
+O OpenTofu permite que você use o mesmo fluxo de trabalho para gerenciar
+múltiplos provedores e lidar com dependências entre nuvens.
+Isso simplifica o gerenciamento e a orquestração de infraestruturas multinuvem
+de grande escala.
 
-### Resources
+### Recursos
 
-- Browse the [Public OpenTofu Registry](https://github.com/opentofu/registry/tree/main/providers) to find thousands of publicly available providers.
+- Navegue pelo
+  [Registro Público do OpenTofu](https://github.com/opentofu/registry/tree/main/providers)
+  para encontrar milhares de provedores disponíveis publicamente.
 
-## Application Infrastructure Deployment, Scaling, and Monitoring Tools
+## Ferramentas para implantação, escalabilidade e monitoramento de infraestrutura de aplicações
 
-You can use OpenTofu to efficiently deploy, release, scale, and monitor infrastructure for multi-tier applications. N-tier application architecture lets you scale application components independently and provides a separation of concerns. An application could consist of a pool of web servers that use a database tier, with additional tiers for API servers, caching servers, and routing meshes. OpenTofu allows you to manage the resources in each tier together, and automatically handles dependencies between tiers. For example, OpenTofu will deploy a database tier before provisioning the web servers that depend on it.
+Você pode usar o OpenTofu para implantar, lançar, escalar e monitorar com
+eficiência a infraestrutura de aplicações multicamadas.
+A arquitetura de aplicações em N camadas permite escalar os componentes da
+aplicação de forma independente e proporciona uma separação de
+responsabilidades.
+Uma aplicação pode consistir em um conjunto de servidores web que utilizam uma
+camada de banco de dados, com camadas adicionais para servidores de API,
+servidores de cache e redes de roteamento.
+O OpenTofu permite gerenciar os recursos em cada camada em conjunto e lida
+automaticamente com as dependências entre as camadas.
+Por exemplo, o OpenTofu implantará uma camada de banco de dados antes de
+provisionar os servidores web que dependem dela.
 
-## Self-Service Clusters
+## Clusters self-service
 
-At a large organization, your centralized operations team may get many repetitive infrastructure requests. You can use OpenTofu to build a "self-serve" infrastructure model that lets product teams manage their own infrastructure independently. You can create and use OpenTofu modules that codify the standards for deploying and managing services in your organization, allowing teams to efficiently deploy services in compliance with your organization’s practices. A cloud backend can also integrate with ticketing systems like ServiceNow to automatically generate new infrastructure requests.
+Em grandes organizações, seu time centralizado de operações pode receber muitas
+solicitações de infraestrutura repetitivas.
+Você pode usar o OpenTofu para criar um modelo de infraestrutura "self-service"
+que permite que as equipes de produto gerenciem sua própria infraestrutura de
+forma independente.
+Você pode criar e usar módulos do OpenTofu que codificam os padrões para
+implantação e gerenciamento de serviços em sua organização, permitindo que os
+times implantem serviços de forma eficiente, em conformidade com as práticas da
+sua organização.
+Um backend na nuvem também pode ser integrado a sistemas de tickets como o
+ServiceNow para gerar automaticamente novas solicitações de infraestrutura.
 
-## Policy Compliance and Management
+## Conformidade e gerenciamento de políticas
 
-OpenTofu can help you enforce policies on the types of resources teams can provision and use. Ticket-based review processes are a bottleneck that can slow down development. Instead, you can use Sentinel, a policy-as-code framework, to automatically enforce compliance and governance policies before OpenTofu makes infrastructure changes. Sentinel policies are available in cloud backends.
+O OpenTofu pode ajudar você a aplicar políticas sobre os tipos de recursos que
+os times podem provisionar e usar.
+Os processos de revisão baseados em tickets são um gargalo que pode atrasar o
+desenvolvimento.
+Em vez disso, você pode usar o Sentinel, uma estrutura de política como código,
+para aplicar automaticamente políticas de conformidade e governança antes que o
+OpenTofu faça alterações na infraestrutura.
+As políticas do Sentinel estão disponíveis em backends na nuvem.
 
-## PaaS Application Setup
+## Configuração de aplicações PaaS
 
-Platform as a Service (PaaS) vendors like Heroku allow you to create web applications and attach add-ons, such as databases or email providers. Heroku can elastically scale the number of dynos or workers, but most non-trivial applications need many add-ons and external services. You can use OpenTofu to codify the setup required for a Heroku application, configure a DNSimple to set a CNAME, and set up Cloudflare as a Content Delivery Network (CDN) for the app. OpenTofu can quickly and consistently do all of this without a web interface.
+Plataformas como Serviço (PaaS), como o Heroku, permitem criar aplicações web e
+adicionar complementos, como bancos de dados ou provedores de e-mail.
+O Heroku pode escalar elasticamente o número de dynos ou workers, mas a maioria
+das aplicações mais complexas exige muitos complementos e serviços externos.
+Você pode usar o OpenTofu para codificar a configuração necessária para uma
+aplicação Heroku, configurar um DNSimple para definir um CNAME e configurar o
+Cloudflare como uma Rede de Distribuição de Conteúdo (CDN) para a aplicação.
+O OpenTofu pode fazer tudo isso de forma rápida e consistente, sem a necessidade
+de uma interface web.
 
-## Software Defined Networking
+## Redes definidas por software
 
-OpenTofu can interact with Software Defined Networks (SDNs) to automatically configure the network according to the needs of the applications running in it. This lets you move from a ticket-based workflow to an automated one, reducing deployment times.
+O OpenTofu pode interagir com Redes Definidas por Software (SDNs) para
+configurar automaticamente a rede de acordo com as necessidades das aplicações
+em execução.
+Isso permite migrar de um fluxo de trabalho baseado em tickets para um
+automatizado, reduzindo o tempo de implantação.
 
 ## Kubernetes
 
-Kubernetes is an open-source workload scheduler for containerized applications. OpenTofu lets you both deploy a Kubernetes cluster and manage its resources (e.g., pods, deployments, services, etc.).
+O Kubernetes é um agendador de cargas de trabalho de código aberto para
+aplicações conteinerizadas.
+O OpenTofu permite implantar um cluster Kubernetes e gerenciar seus recursos
+(por exemplo, pods, deployments, serviços etc.).
 
-## Parallel Environments
+## Ambientes paralelos
 
-You may have staging or QA environments that you use to test new applications before releasing them in production. As the production environment grows larger and more complex, it can be increasingly difficult to maintain an up-to-date environment for each stage of the development process. OpenTofu lets you rapidly spin up and decommission infrastructure for development, test, QA, and production. Using OpenTofu to create disposable environments as needed is more cost-efficient than maintaining each one indefinitely.
+Você pode ter ambientes de staging ou de QA que usa para testar novas aplicações
+antes de lançá-las em produção.
+À medida que o ambiente de produção cresce e se torna mais complexo, pode ser
+cada vez mais difícil manter um ambiente atualizado para cada etapa do processo
+de desenvolvimento.
+O OpenTofu permite criar e desativar rapidamente infraestrutura para
+desenvolvimento, teste, QA e produção.
+Usar o OpenTofu para criar ambientes descartáveis conforme a necessidade é mais
+econômico do que manter cada um indefinidamente.
 
-## Software Demos
+## Demonstrações de software
 
-You can use OpenTofu to create, provision, and bootstrap a demo on various cloud providers. This lets end users easily try the software on their own infrastructure and even enables them to adjust parameters like cluster size to more rigorously test tools at any scale.
+Você pode usar o OpenTofu para criar, provisionar e inicializar uma demonstração
+em vários provedores de nuvem.
+Isso permite que as pessoas usuárias finais experimentem facilmente o software
+em sua própria infraestrutura e até mesmo ajustem parâmetros como o tamanho do
+cluster para testar as ferramentas de forma mais rigorosa em qualquer escala.
