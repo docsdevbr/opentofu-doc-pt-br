@@ -7,35 +7,46 @@
 # The original work was translated from English into Brazilian Portuguese.
 # https://github.com/opentofu/opentofu/blob/-/LICENSE
 
+source_url: https://github.com/opentofu/opentofu/blob/v1.10/website/docs/intro/whats-new.mdx
+revision: eb40bb44845223ff911b375c2fbb0c13d11f28ed
+status: ready
+
 sidebar_position: 2
-sidebar_label: What's new in version 1.10?
+sidebar_label: O que há de novo na versão 1.10?
 description: |-
-  Learn all about the new features in OpenTofu 1.10.
+  Saiba tudo sobre os novos recursos do OpenTofu 1.10.
 ---
 
-# What's new in OpenTofu 1.10?
+# O que há de novo no OpenTofu 1.10?
 
-OpenTofu 1.10 brings major improvements to how you distribute and manage your infrastructure code, with OCI registry support, native S3 state locking, and enhanced observability through OpenTelemetry tracing.
+O OpenTofu 1.10 traz melhorias significativas na forma como você distribui e
+gerencia seu código de infraestrutura, com suporte ao registro OCI, bloqueio de
+estado nativo do S3 e observabilidade aprimorada por meio do rastreamento do
+OpenTelemetry.
 
-This page will run you through the most important changes in OpenTofu 1.10:
+Esta página irá apresentar as mudanças mais importantes no OpenTofu 1.10:
 
-- [OCI Registry Support](#oci-registry-support)
-- [Native S3 State Locking](#native-s3-state-locking)
-- [OpenTelemetry Tracing (Experimental)](#opentelemetry-tracing-experimental)
-- [Target and Exclude Files](#target-and-exclude-files)
-- [Global Provider Cache Lock](#global-provider-cache-lock)
-- [Deprecation Support (Experimental)](#deprecation-support-experimental)
-- [Enhanced moved and removed blocks](#enhanced-moved-and-removed-blocks)
-- [External Key Providers](#external-key-providers)
-- [Breaking Changes](#breaking-changes)
-- [Smaller improvements](#smaller-improvements)
+- [Suporte a registros OCI](#suporte-a-registros-oci)
+- [Bloqueio de estado S3 nativo](#bloqueio-de-estado-s3-nativo)
+- [Rastreamento OpenTelemetry (experimental)](#rastreamento-opentelemetry-experimental)
+- [Arquivos de destino e exclusão](#arquivos-de-destino-e-exclusão)
+- [Bloqueio do cache global do provedores](#bloqueio-do-cache-global-do-provedores)
+- [Suporte a descontinuação (experimental)](#suporte-a-descontinuação-experimental)
+- [Blocos `moved` e `removed` aprimorados](#blocos-moved-e-removed-aprimorados)
+- [Provedores de chaves externos](#provedores-de-chaves-externos)
+- [Alterações significativas](#alterações-significativas)
+- [Melhorias menores](#melhorias-menores)
 - [Bugfixes](#bugfixes)
 
-## OCI Registry Support
+## Suporte a registros OCI
 
-OpenTofu can now use OCI (Open Container Initiative) registries to distribute both providers and modules, enabling you to use your existing container registry infrastructure for infrastructure-as-code components.
+O OpenTofu agora pode usar registros OCI (Open Container Initiative) para
+distribuir provedores e módulos, permitindo que você utilize sua infraestrutura
+de registro de contêineres existente para componentes de infraestrutura como
+código.
 
-Configure OCI registry provider mirrors in your [CLI configuration](/docs/cli/config/config-file):
+Configure os espelhos do provedor de registro OCI em sua
+[configuração da CLI](/docs/cli/config/config-file):
 
 ```hcl
 provider_installation {
@@ -46,7 +57,8 @@ provider_installation {
 }
 ```
 
-Use module packages from OCI registries directly as a new [module source type](/docs/language/modules/sources/):
+Use pacotes de módulos de registros OCI diretamente como um novo
+[tipo de origem de módulo](/docs/language/modules/sources/):
 
 ```hcl
 module "vpc" {
@@ -54,32 +66,45 @@ module "vpc" {
 }
 ```
 
-This feature is particularly valuable for air-gapped environments and organizations that want to use their existing container registry infrastructure.
+Este recurso é particularmente valioso para ambientes isolados da internet e
+organizações que desejam usar sua infraestrutura de registro de contêineres
+existente.
 
-You can find more information on OpenTofu's OCI artifact formats, and instructions for building your own artifacts, in [OCI Registry Integrations](/docs/main/cli/oci_registries/).
+Você pode encontrar mais informações sobre os formatos de artefatos OCI do
+OpenTofu e instruções para criar seus próprios artefatos em
+[Integrações de registros OCI](/docs/main/cli/oci_registries/).
 
-## Native S3 State Locking
+## Bloqueio de estado S3 nativo
 
-The S3 backend now supports native state locking without requiring DynamoDB, simplifying your infrastructure and reducing costs.
+O backend S3 agora oferece suporte ao bloqueio de estado nativo sem a
+necessidade do DynamoDB, simplificando sua infraestrutura e reduzindo custos.
 
 ```hcl
 terraform {
   backend "s3" {
-    bucket       = "my-opentofu-state"
+    bucket       = "meu-estado-opentofu"
     key          = "prod/opentofu.tfstate"
     region       = "us-east-1"
-    use_lockfile = true  # Enable native S3 locking
+    use_lockfile = true  # Ativar bloqueio nativo do S3
   }
 }
 ```
 
-This feature leverages S3's conditional writes to provide reliable state locking using only your S3 bucket. Migration from DynamoDB-based locking is straightforward, with support for dual locking during the transition period. See the [S3 backend documentation](../language/settings/backends/s3.mdx#s3-state-locking) for details.
+Este recurso aproveita as gravações condicionais do S3 para fornecer bloqueio de
+estado confiável usando apenas o seu bucket S3.
+A migração do bloqueio baseado em DynamoDB é simples, com suporte para bloqueio
+duplo durante o período de transição.
+Consulte a
+[documentação do backend S3](../language/settings/backends/s3.mdx#s3-state-locking)
+para obter detalhes.
 
-## OpenTelemetry Tracing (Experimental)
+## Rastreamento OpenTelemetry (experimental)
 
-Debug and optimize your OpenTofu operations with built-in OpenTelemetry support. Tracing is disabled by default to ensure privacy.
+Depure e otimize suas operações do OpenTofu com o suporte integrado ao
+OpenTelemetry.
+O rastreamento está desativado por padrão para garantir a privacidade.
 
-Enable tracing by setting environment variables:
+Habilite o rastreamento definindo as variáveis de ambiente:
 
 ```bash
 export OTEL_TRACES_EXPORTER=otlp
@@ -87,80 +112,99 @@ export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
 export OTEL_EXPORTER_OTLP_INSECURE=true
 ```
 
-OpenTofu will then send traces to your configured collector (such as Jaeger or Grafana Tempo), helping you identify performance bottlenecks and debug complex operations. Learn more in the [tracing documentation](../internals/tracing.mdx).
+O OpenTofu enviará rastros para o seu coletor configurado (como Jaeger ou
+Grafana Tempo), ajudando você a identificar gargalos de desempenho e depurar
+operações complexas.
+Saiba mais na [documentação de rastreamento](../internals/tracing.mdx).
 
-Please note that no telemetry data is sent to OpenTofu or any external service unless you explicitly configure it.
+Observe que nenhum dado de telemetria é enviado para o OpenTofu ou qualquer
+serviço externo, a menos que você o configure explicitamente.
 
-## Target and Exclude Files
+## Arquivos de destino e exclusão
 
-New `-target-file` and `-exclude-file` options allow you to manage resource targeting through version-controlled files:
+As novas opções `-target-file` e `-exclude-file` permitem gerenciar o
+direcionamento de recursos por meio de arquivos versionados:
 
 ```bash
 tofu plan -target-file=targets/production.txt
 tofu apply -exclude-file=excludes/experimental.txt
 ```
 
-The file format is simple - one resource address per line with support for comments:
+O formato do arquivo é simples: um endereço de recurso por linha, com suporte
+para comentários.
 
 ```
-# Critical infrastructure components
+# Componentes de infraestrutura crítica
 module.networking.aws_vpc.main
 module.networking.aws_subnet.public[*]
 
-# Database infrastructure
+# Infraestrutura de banco de dados
 module.database.aws_db_instance.primary
 ```
 
-This feature is perfect for CI/CD pipelines, phased deployments, and team collaboration.
+Este recurso é perfeito para pipelines de CI/CD, implantações em fases e
+colaboração de times.
 
-## Global Provider Cache Lock
+## Bloqueio do cache global do provedores
 
-Concurrent OpenTofu operations can now safely share the provider cache, preventing corruption and conflicts in CI/CD environments and when using tools like Terragrunt.
+Operações simultâneas do OpenTofu agora podem compartilhar o cache do provedor
+com segurança, evitando corrupção e conflitos em ambientes de CI/CD e ao usar
+ferramentas como o Terragrunt.
 
-Enable the global cache with:
+Habilite o cache global com:
 
 ```bash
-export TF_PLUGIN_CACHE_DIR=/path/to/shared/cache
+export TF_PLUGIN_CACHE_DIR=/caminho/para/o/cache/compartilhado
 ```
 
-The filesystem-level locking ensures only one process can modify a provider at a time, while others wait gracefully. This makes the provider cache ready for large-scale parallel operations.
+O bloqueio em nível de sistema de arquivos garante que apenas um processo possa
+modificar um provedor por vez, enquanto os outros aguardam normalmente.
+Isso torna o cache de provedores adequado para operações paralelas em larga
+escala.
 
-You can find more information about using the global provider cache in the [provider cache documentation](../cli/config/config-file.mdx).
+Você pode encontrar mais informações sobre como usar o cache global de
+provedores na
+[documentação do cache de provedores](../cli/config/config-file.mdx).
 
-## Deprecation Support (Experimental)
+## Suporte a descontinuação (experimental)
 
-Module authors can now mark variables and outputs as deprecated, helping users migrate to newer APIs gracefully:
+As pessoas autoras de módulos agora podem marcar variáveis e saídas como
+obsoletas, ajudando as pessoas usuárias a migrar para APIs mais recentes de
+forma mais eficiente:
 
 ```hcl
 variable "instance_type" {
   type        = string
-  deprecated  = "Use var.compute_type instead"
+  deprecated  = "Use var.compute_type em vez disso."
 }
 
 output "instance_ip" {
   value       = aws_instance.main.public_ip
-  deprecated  = "Use output.instance_details for more information"
+  deprecated  = "Use output.instance_details para obter mais informações."
 }
 ```
 
-Users will see clear warnings when using deprecated features, making module evolution more manageable.
+As pessoas usuárias verão avisos claros ao usar recursos obsoletos, tornando a
+evolução do módulo mais gerenciável.
 
-## Enhanced moved and removed blocks
+## Blocos `moved` e `removed` aprimorados
 
-The `moved` block now supports migrating resources between different types, including built-in support for migrating from `null_resource` to `terraform_data`:
+O bloco `moved` agora suporta a migração de recursos entre diferentes tipos,
+incluindo suporte integrado para migração de `null_resource` para
+`terraform_data`:
 
 ```hcl
 moved {
-  from = null_resource.example
-  to   = terraform_data.example
+  from = null_resource.exemplo
+  to   = terraform_data.exemplo
 }
 ```
 
-The `removed` block now supports lifecycle rules and provisioners:
+O bloco `removed` agora suporta regras de ciclo de vida e provisionadores:
 
 ```hcl
 removed {
-  from = aws_instance.legacy
+  from = aws_instance.legada
 
   lifecycle {
     destroy = false
@@ -168,11 +212,16 @@ removed {
 }
 ```
 
-These enhancements make infrastructure refactoring more powerful and flexible. See the [refactoring documentation](../language/modules/develop/refactoring.mdx) for more details.
+Essas melhorias tornam a refatoração de infraestrutura mais poderosa e flexível.
+Consulte a
+[documentação de refatoração](../language/modules/develop/refactoring.mdx)
+para obter mais detalhes.
 
-## External Key Providers
+## Provedores de chaves externos
 
-State encryption now fully supports external key providers, allowing integration with your preferred secret management tools:
+A criptografia de estado agora oferece suporte completo a provedores de chaves
+externos, permitindo a integração com suas ferramentas de gerenciamento de
+segredos preferidas:
 
 ```hcl
 terraform {
@@ -192,43 +241,64 @@ terraform {
 }
 ```
 
-You can also chain key providers for enhanced security. Learn more in the [state encryption documentation](../language/state/encryption.mdx#key-providers).
+Você também pode encadear provedores de chaves para maior segurança.
+Saiba mais na
+[documentação de encriptação de estado](../language/state/encryption.mdx#key-providers).
 
-## Breaking Changes
+## Alterações significativas
 
-### Platform Requirements
-- **Linux**: Now requires kernel 3.2 or later
-- **macOS**: Now requires macOS 11 (Big Sur) or later
-- **Windows**: More conservative symlink handling
+### Requisitos de plataforma
 
-### Docker Image
-The `ghcr.io/opentofu/opentofu` image is no longer supported as a base image. See [building your own image](../intro/install/docker.mdx#building-your-own-image) for alternatives.
+- **Linux**: agora requer o kernel 3.2 ou posterior;
+- **macOS**: agora requer o macOS 11 (Big Sur) ou posterior;
+- **Windows**: tratamento de links simbólicos mais conservador.
 
-### PostgreSQL Backend
-The locking mechanism has changed. You should not use OpenTofu 1.10 in parallel with earlier versions when sharing the same PostgreSQL database because the locking implementation has changed. Mixing versions can lead to conflicting writes and could cause data loss.
+### Imagem Docker
 
-## Smaller improvements
+A imagem `ghcr.io/opentofu/opentofu` não é mais suportada como imagem base.
+Consulte
+[criando sua própria imagem](../intro/install/docker.mdx#building-your-own-image)
+para alternativas.
 
-- The `element` function now supports negative indices: `element(list, -1)` returns the last element
-- New `-concise` flag for cleaner automation output
-- PostgreSQL backend supports custom table names for multi-project setups
-- HTTP backend now supports force-unlock
-- Provider installation performance improvements
-- Improved error messages for type conversion failures
-- New built-in provider functions:
-  - `provider::terraform::decode_tfvars` - Decode a TFVars file content into an object
-  - `provider::terraform::encode_tfvars` - Encode an object into a string with TFVars format
-  - `provider::terraform::encode_expr` - Encode an expression into valid OpenTofu syntax
-- OpenTofu now recommends `-exclude` instead of `-target` in error messages about unknown values in `count` and `for_each`
+### Backend PostgreSQL
 
-## Bugfixes
+O mecanismo de bloqueio foi alterado.
+Não utilize o OpenTofu 1.10 em paralelo com versões anteriores ao compartilhar o
+mesmo banco de dados PostgreSQL, pois a implementação de bloqueio foi alterada.
+A mistura de versões pode levar a gravações conflitantes e causar perda de
+dados.
 
-- Fixed provider name validation crash in `provider_meta` block
-- PostgreSQL backend no longer fails on workspace creation for parallel returns
-- Fixed null value handling in `element`, `slice`, and `values` functions
-- Resolved state encryption issues with backend interactions
-- Fixed import block generation improvements
-- Better handling of provider installation errors
-- Fixed dependency graph issues with import blocks
+## Melhorias menores
 
-For a complete list of changes, see the [full changelog](https://github.com/opentofu/opentofu/blob/v1.10/CHANGELOG.md).
+- A função `element` agora suporta índices negativos: `element(list, -1)`
+  retorna o último elemento;
+- Novo sinalizador `-concise` para uma saída de automação mais limpa;
+- O backend PostgreSQL suporta nomes de tabela personalizados para configurações
+  com múltiplos projetos;
+- O backend HTTP agora suporta desbloqueio forçado;
+- Melhorias no desempenho da instalação dos provedores;
+- Mensagens de erro aprimoradas para falhas de conversão de tipo;
+- Novas funções integradas do provedor:
+  - `provider::terraform::decode_tfvars` - decodifica o conteúdo de um arquivo
+    TFVars em um objeto;
+  - `provider::terraform::encode_tfvars` - codifica um objeto em uma string com
+    o formato TFVars;
+  - `provider::terraform::encode_expr` - codifica uma expressão em uma sintaxe
+    válida do OpenTofu.
+- O OpenTofu agora recomenda `-exclude` em vez de `-target` em mensagens de erro
+  sobre valores desconhecidos em `count` e `for_each`.
+
+## Correções de falhas
+
+- Corrigido o erro de validação do nome do provedor no bloco `provider_meta`;
+- O backend PostgreSQL não falha mais na criação do espaço de trabalho para
+  retornos paralelos;
+- Corrigido o tratamento de valores nulos nas funções `element`, `slice` e
+  `values`;
+- Resolvidos os problemas de encriptação de estado com interações com o backend;
+- Corrigidas as melhorias na geração do bloco de importação;
+- Melhor tratamento de erros de instalação dos provedores;
+- Corrigidos os problemas no grafo de dependências com blocos de importação.
+
+Para obter uma lista completa de alterações, consulte o
+[changelog completo](https://github.com/opentofu/opentofu/blob/v1.10/CHANGELOG.md).
